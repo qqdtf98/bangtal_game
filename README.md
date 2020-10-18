@@ -2,6 +2,7 @@
 ## 블럭 탈출 게임
 ### 게임 화면
 ![1](https://user-images.githubusercontent.com/29995295/96365989-9e57b900-117f-11eb-9e6a-e1f4df6154eb.PNG)
+![2](https://user-images.githubusercontent.com/29995295/96366015-d7902900-117f-11eb-9c09-13fa2fd76a81.PNG)
 ### 게임 설명
 - 블럭들을 움직여서 빨간색 블럭이 회색 부분으로 탈출할 수 있도록 조작하는 게임입니다.
 - 가로로 놓인 블럭은 좌우로만 움직일 수 있습니다.
