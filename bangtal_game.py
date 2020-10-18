@@ -1,7 +1,6 @@
 from bangtal import *
 from bangtal.singleton import *
 from bangtal.game import *
-import copy
 
 scene1 = Scene("메인","images/main.png")
 scene2 = Scene("게임","images/main.png")
@@ -27,12 +26,23 @@ manual.setScale(1.1)
 manual.locate(scene1, 550,150)
 manual.show()
 
+manualBoard = Object("images/manualBoard.png")
+manualBoard.setScale(0.7)
+manualBoard.locate(scene1, 50,20)
+
+def manual_onClick(x,y,action):
+  manualBoard.show()
+manual.onMouseAction = manual_onClick
+
+def manualBoard_onClick(x,y,action):
+  manualBoard.hide()
+manualBoard.onMouseAction = manualBoard_onClick
+
 background = Object("images/background.png")
 background.locate(scene2,180,80)
 background.show()
 
-
-
+# 방향키 생성
 up = Object("images/up.png")
 up.locate(scene2,950,190)
 up.show()
@@ -54,7 +64,7 @@ select.locate(scene2, 870, 650)
 select.show()
 
 restart = Object("images/restart.png")
-restart.locate(scene2, 1000, 650)
+restart.locate(scene2, 1080, 250)
 restart.show()
 
 def lv1_onClick(x,y,action):
@@ -91,7 +101,6 @@ class Block(Object):
     id = GameServer.instance().createObject(file)
     ObjectManager.instance().register(id, self)
 
-    print(file)
     self._file = file
     self.ID = id
     self.num = num
@@ -108,6 +117,7 @@ blockArr = []
 
 
 def setGame(game):
+  # lv1과 lv2에 따라 board와 blockArr 셋팅
   global board
   global blockArr
   if(game == 'lv1'):
@@ -145,10 +155,17 @@ def setGame(game):
     for block in blockArr:
       block.show()
 
-def up_onClick(x,y,action):
-  if(blockArr[selectedGame].state == 1):
-    print(blockArr[selectedBlock]._file)
-up.onMouseAction = up_onClick
+
+def checkExit():
+  if(blockArr[0].pos[0][1]==5):
+    success = Object("images/success.png")
+    success.locate(scene2, 400,300)
+    success.show()
+
+    def success_onClick(x,y,action):
+      endGame()
+    success.onMouseAction = success_onClick
+    
 
 def right_onClick(x,y,action):
   block = blockArr[selectedBlock]
@@ -161,6 +178,8 @@ def right_onClick(x,y,action):
       block.location[0] += 80
       for i in range(0,block.size):
         block.pos[i][1] = block.pos[i][1]+1
+      if(block.num == 0):
+        checkExit()
 right.onMouseAction = right_onClick
 
 def left_onClick(x,y,action):
@@ -202,12 +221,6 @@ def down_onClick(x,y,action):
         block.pos[i][0] += 1
 down.onMouseAction = down_onClick
 
-def printBoard():
-  for i in range(0,7):
-    for j in range(0,7):
-      print(board[i][j],end='')
-    print()
-  print('ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ')
 
 
 
