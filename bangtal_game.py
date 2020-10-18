@@ -15,16 +15,17 @@ selectedGame = ''
 board = []
 
 lv1 = Object("images/lv1.png")
-lv1.locate(scene1, 200,450)
+lv1.locate(scene1, 350,360)
 lv1.show()
 
 lv2 = Object("images/lv2.png")
-lv2.locate(scene1, 500,450)
+lv2.locate(scene1, 710,360)
 lv2.show()
 
-lv3 = Object("images/lv3.png")
-lv3.locate(scene1, 800,450)
-lv3.show()
+manual = Object("images/manual.png")
+manual.setScale(1.1)
+manual.locate(scene1, 550,150)
+manual.show()
 
 background = Object("images/background.png")
 background.locate(scene2,180,80)
@@ -52,6 +53,10 @@ select = Object("images/select.png")
 select.locate(scene2, 870, 650)
 select.show()
 
+restart = Object("images/restart.png")
+restart.locate(scene2, 1000, 650)
+restart.show()
+
 def lv1_onClick(x,y,action):
   global selectedGame
   selectedGame = 'lv1'
@@ -66,6 +71,11 @@ def lv2_onClick(x,y,action):
   scene2.enter()
 lv2.onMouseAction = lv2_onClick
 
+def restart_onClick(x,y,action):
+  for i in blockArr:
+    i.hide()
+  setGame(selectedGame)
+restart.onMouseAction = restart_onClick
 
 selected = Object("images/main.png")
 
