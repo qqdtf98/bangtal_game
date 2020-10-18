@@ -49,20 +49,18 @@ left.locate(scene2,850,100)
 left.show()
 
 select = Object("images/select.png")
-select.locate(scene2, 850, 650)
+select.locate(scene2, 870, 650)
 select.show()
 
-restart = Object("images/restart.png")
-restart.locate(scene2, 1000, 250)
-restart.show()
-
 def lv1_onClick(x,y,action):
+  global selectedGame
   selectedGame = 'lv1'
   setGame('lv1')
   scene2.enter()
 lv1.onMouseAction = lv1_onClick
 
 def lv2_onClick(x,y,action):
+  global selectedGame
   selectedGame = 'lv2'
   setGame('lv2')
   scene2.enter()
@@ -75,7 +73,7 @@ class Block(Object):
   def onMouseClick(self,x,y,action):
     global selectedBlock
     selected.setImage(self._file)
-    selected.locate(scene2,900,450)
+    selected.locate(scene2,920,380)
     selected.show()
     selectedBlock = self.num
     
@@ -96,12 +94,12 @@ class Block(Object):
 
 
 
-game1 = []
+blockArr = []
 
 
 def setGame(game):
   global board
-  global game1
+  global blockArr
   if(game == 'lv1'):
     board = [[0,0,0,0,0,0,0],
              [0,0,0,0,1,1,1],
@@ -109,23 +107,41 @@ def setGame(game):
              [0,0,1,1,1,1,1],
              [0,0,0,0,1,1,1],
              [0,0,0,0,0,0,0],
-             [0,0,0,0,0,0,0],]
-    game1 = [Block(0,2,0,[360,340],[[3,2],[3,3]],"images/10.png"),
+             [0,0,0,0,0,0,0]]
+    blockArr = [Block(0,2,0,[360,340],[[3,2],[3,3]],"images/10.png"),
          Block(1,2,1,[520,340],[[2,4],[3,4]],"images/21.png"),
          Block(2,2,1,[600,340],[[2,5],[3,5]],"images/31.png"),
          Block(3,2,1,[680,340],[[2,6],[3,6]],"images/41.png"),
          Block(4,3,0,[520,500],[[1,4],[1,5],[1,6]],"images/50.png"),
          Block(5,3,0,[520,260],[[4,4],[4,5],[4,6]],"images/60.png")]
-    for block in game1:
+    for block in blockArr:
+      block.show()
+  elif (game == 'lv2'):
+    board = [[0,0,0,0,0,0,0],
+             [0,0,1,0,1,1,1],
+             [0,0,1,0,1,0,1],
+             [0,0,1,0,1,1,1],
+             [0,0,1,0,1,0,1],
+             [0,0,1,0,1,1,1],
+             [0,0,0,0,0,0,0]]
+    blockArr = [Block(0,2,0,[520,340],[[3,4],[3,5]],"images/10.png"),
+             Block(1,2,1,[360,420],[[1,2],[2,2]],"images/21.png"),
+             Block(2,2,1,[520,420],[[1,4],[2,4]],"images/31.png"),
+             Block(3,2,0,[600,500],[[1,5],[1,6]],"images/40.png"),
+             Block(4,3,1,[360,180],[[3,2],[4,2],[5,2]],"images/51.png"),
+             Block(5,3,1,[680,260],[[2,6],[3,6],[4,6]],"images/61.png"),
+             Block(6,2,1,[520,180],[[4,4],[5,4]],"images/71.png"),
+             Block(7,2,0,[600,180],[[5,5],[5,6]],"images/80.png")]
+    for block in blockArr:
       block.show()
 
 def up_onClick(x,y,action):
-  if(game1[selectedGame].state == 1):
-    print(game1[selectedBlock]._file)
+  if(blockArr[selectedGame].state == 1):
+    print(blockArr[selectedBlock]._file)
 up.onMouseAction = up_onClick
 
 def right_onClick(x,y,action):
-  block = game1[selectedBlock]
+  block = blockArr[selectedBlock]
   if(block.state == 0 and selectedBlock != -1 and block.pos[block.size-1][1]+1<7):
     if(block.location[0]+80<=end
        and board[block.pos[block.size-1][0]][block.pos[block.size-1][1]+1] == 0):
@@ -138,7 +154,7 @@ def right_onClick(x,y,action):
 right.onMouseAction = right_onClick
 
 def left_onClick(x,y,action):
-  block = game1[selectedBlock]
+  block = blockArr[selectedBlock]
   if(block.state == 0 and selectedBlock != -1):
     if(block.location[0]-80>=start 
        and board[block.pos[0][0]][block.pos[0][1]-1] == 0):
@@ -151,7 +167,7 @@ def left_onClick(x,y,action):
 left.onMouseAction = left_onClick
 
 def up_onClick(x,y,action):
-  block = game1[selectedBlock]
+  block = blockArr[selectedBlock]
   if(block.state == 1 and selectedBlock != -1) and block.pos[0][0]!=0:
     if(block.location[1]+80<=top 
        and board[block.pos[0][0]-1][block.pos[0][1]] == 0):
@@ -164,7 +180,7 @@ def up_onClick(x,y,action):
 up.onMouseAction = up_onClick
 
 def down_onClick(x,y,action):
-  block = game1[selectedBlock]
+  block = blockArr[selectedBlock]
   if(block.state == 1 and selectedBlock != -1):
     if(block.location[1]-80>=bottom 
        and board[block.pos[block.size-1][0]+1][block.pos[block.size-1][1]] == 0):
